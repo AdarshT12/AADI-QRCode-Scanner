@@ -1,0 +1,104 @@
+.upload-scan-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.upload-scan-container>* {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Tab buttons */
+.tab-header button {
+  flex: 1;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  margin: 0px 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+  width: 50%;
+}
+
+.tab-header button:hover {
+  background: var(--button-bg);
+  color: var(--text-color-secondary);
+}
+
+/* Active tab */
+.tab-header button.active {
+  color: var(--primary-color);
+  background: var(--text-color-primary);
+  color: var(--text-color-secondary);
+  font-weight: 600;
+}
+
+/* Tab content area */
+.tab-content {
+  padding: 10px 20px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Responsive adjustments */
+
+/* Base styles (already defined above) */
+
+/* Tablet screens */
+@media (max-width: 1024px) {
+  .upload-scan-container {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  /* .tab-header button {
+    font-size: 16px;
+    padding: 12px 24px;
+    width: 100%; 
+  } */
+}
+
+/* Mobile screens */
+@media (max-width: 768px) {
+  .upload-scan-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .upload-scan-container>* {
+    flex: none;
+    width: 100%;
+  }
+
+  .tab-header {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}
+
+/* Small mobile (extra compact) */
+@media (max-width: 480px) {
+  .upload-scan-container {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .tab-header button {
+    font-size: 13px;
+    padding: 10px 20px;
+  }
+
+  .tab-content {
+    padding: 8px 12px;
+  }
+}

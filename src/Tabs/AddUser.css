@@ -1,0 +1,197 @@
+/* Card container */
+.card {
+    width: 350px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    font-family: var(--secondary-font-family);
+}
+
+/* Form groups */
+.form-group {  
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Input fields */
+.form-group input[type="email"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.checkbox-input {
+    height: 18px;
+    width: 18px;
+}
+
+/* Checkbox styling */
+.form-group.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.password-group {
+    display: flex;
+    gap: 8px;
+}
+
+/* Buttons */
+.generate-password-button,
+.submit-button {
+    padding: 10px 12px;
+    background: #0078d7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.submit-button:hover,
+.generate-password-button:hover {
+    background: #005fa3;
+}
+
+/* Generate Password button inline */
+.form-group button {
+    margin-top: 8px;
+    width: 100%;
+}
+
+/* Success & error messages */
+.message {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.message.success {
+    background: #e6f7e6;
+    color: #2e7d32;
+}
+
+.message.error {
+    background: #fdecea;
+    color: #c62828;
+}
+
+/* Tablet range: 769px – 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card {
+    width: 300px;
+    margin: 30px auto;
+    padding: 16px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .form-group input[type="email"],
+  .form-group input[type="text"] {
+    font-size: 13px;
+    padding: 7px;
+  }
+
+  .generate-password-button,
+  .submit-button {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .message {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+/* Mobile range: 481px – 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 280px;
+    margin: 20px auto;
+    padding: 14px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+  }
+
+  .form-group input[type="email"],
+  .form-group input[type="text"] {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .checkbox-input {
+    height: 16px;
+    width: 16px;
+  }
+
+  .generate-password-button,
+  .submit-button {
+    font-size: 12px;
+    padding: 7px 9px;
+  }
+
+  .message {
+    font-size: 12px;
+    padding: 7px;
+  }
+}
+
+/* Small mobile: ≤480px */
+@media (max-width: 480px) {
+  .card {
+    max-width: 240px;
+    margin: 16px auto;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+  }
+
+  .form-group input[type="email"],
+  .form-group input[type="text"] {
+    font-size: 11px;
+    padding: 5px;
+  }
+
+  .checkbox-input {
+    height: 14px;
+    width: 14px;
+  }
+
+  .generate-password-button,
+  .submit-button {
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 4px;
+  }
+
+  .message {
+    font-size: 11px;
+    padding: 6px;
+  }
+}

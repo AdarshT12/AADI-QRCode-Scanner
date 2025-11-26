@@ -1,0 +1,250 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 400px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.login-icon img{
+  height:130px;
+  width:170px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-family: var(--primary-font-family);
+}
+
+.login-subtitle {
+  font-size: 18px;
+  color: var(--secondary-color);
+  margin-bottom: 30px;
+}
+
+.login-form .input-group {
+  display: flex;
+  flex-direction: column;
+  margin:15px 0px;
+}
+
+.login-form .input-row {
+  position: relative;
+  display: flex;
+  align-items: center; 
+}
+
+.login-form  .input-row .icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%); 
+  font-size: 20px;
+  color: var(--button-bg);
+  pointer-events: none;
+}
+
+.login-form .input-row .toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 40px; 
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box; 
+}
+
+.login-form .error {
+  text-align: left;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.messageBox {
+  margin-top: 12px;
+}
+
+.login-form .error, .messageBox .messageLabel{
+  color: var(--error-label-color);
+  font-family: var(--secondary-font-family);
+  font-size: 14px;
+}
+
+.messageBox .messageLabel {
+  background: #fdecea;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: block;
+  text-align: center; 
+
+}
+
+.login-form .login-button {
+  width: 100%;
+  margin-top: 10px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  font-family: var(--primary-font-family);
+}
+
+/* Base styles (already defined above) */
+
+/* Tablet screens */
+@media (max-width: 1024px) {
+  .login-card {
+    max-width: 340px;
+    padding: 32px;
+    border-radius: 18px;
+  }
+
+  .login-icon img {
+    height: 110px;
+    width: 150px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .login-subtitle {
+    font-size: 16px;
+  }
+
+  .login-form input {
+    font-size: 14px;
+    padding: 10px 36px;
+  }
+
+  .login-form .login-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 768px) {
+  .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+     min-height: 100vh;
+  }
+
+  .login-card {
+    max-width: 100%;
+    padding: 24px;
+    border-radius: 16px;
+    margin:auto 0;
+  }
+
+  .login-icon img {
+    height: 90px;
+    width: 120px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .login-form input {
+    font-size: 13px;
+    padding: 8px 32px;
+  }
+
+  .login-form .login-button {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+/* Small mobile (extra compact) */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 20px;           /* add breathing space */
+    min-height: auto;        /* allow scrolling if needed */
+  }
+
+  .login-card {
+    width:100%;
+    max-width: 320px;
+    padding: 18px;
+    border-radius: 12px;
+    height:400px;
+  }
+
+  .login-icon img {
+    height: 90px;
+    width: 110px;
+  }
+
+  .login-title {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  .login-subtitle {
+    font-size: 13px;
+  }
+
+  .login-form input {
+    font-size: 14px;
+    padding: 12px 24px;
+    padding-left: 34px;
+  }
+
+  .login-form .login-button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .login-form .error,
+  .messageBox .messageLabel {
+    font-size: 12px;
+  }
+
+  .login-form .input-row .icon {
+    font-size: 16px;
+    left: 10px;
+  }
+
+  .login-form .input-row .toggle-icon {
+    font-size: 16px;
+    right: 10px;
+  }
+}

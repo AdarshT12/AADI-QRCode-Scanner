@@ -1,0 +1,151 @@
+.member-details-container {
+  display: flex;
+  justify-content: center; 
+  flex-direction: column;
+  align-items: center;     
+  height: 100vh;  
+}
+
+.image-container img {
+  height: 250px;
+  width: 450px;
+}
+
+.id-card {
+  width: 400px;
+  height: 50%;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: #fff;
+  font-family: var(--primary-font-family);
+  overflow: hidden;
+}
+
+.id-card-header {
+  background: var(--button-bg);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+}
+
+.profile-icon {
+  font-size: 100px;
+  color: var(--button-bg);
+  display: block;
+  margin: 16px auto;
+}
+
+.id-card-body {
+  padding: 16px;
+  line-height: 1.6;
+}
+
+.id-card-body p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.back-button {
+  margin: 16px auto;
+  display: block;
+  padding: 10px 20px;
+  background: var(--primary-color);
+  color: var(--text-color-secondary);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.back-button:hover {
+  background: #5848d6;
+}
+
+/* Tablet range: 769px – 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .image-container img {
+    height: 200px;
+    width: 360px;
+  }
+
+  .id-card {
+    width: 320px;
+    height: auto;
+  }
+
+  .profile-icon {
+    font-size: 80px;
+  }
+
+  .id-card-body p {
+    font-size: 13px;
+  }
+}
+
+/* Mobile range: 481px – 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .member-details-container {
+    height: auto;
+    padding: 16px;
+  }
+
+  .image-container img {
+    height: 160px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .id-card {
+    width: 100%;
+    max-width: 280px;
+    margin: 12px auto;
+  }
+
+  .profile-icon {
+    font-size: 60px;
+    margin: 12px auto;
+  }
+
+  .id-card-body {
+    padding: 12px;
+  }
+
+  .id-card-body p {
+    font-size: 12px;
+  }
+}
+
+/* Small mobile: ≤480px */
+@media (max-width: 480px) {
+  .image-container img {
+    height: 120px;
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .id-card {
+    max-width: 240px;
+    border-radius: 8px;
+  }
+
+  .profile-icon {
+    font-size: 48px;
+  }
+
+  .id-card-header {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .id-card-body {
+    padding: 10px;
+  }
+
+  .id-card-body p {
+    font-size: 11px;
+    margin: 6px 0;
+  }
+}
