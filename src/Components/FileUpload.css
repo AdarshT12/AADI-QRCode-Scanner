@@ -173,7 +173,10 @@ progress::-moz-progress-bar {
   transition: width 0.3s ease;
 }
 
-/* Base styles (already defined above) */
+.upload-container.disabled {
+  opacity: 0.6;
+  pointer-events: none; 
+}
 
 /* Tablet screens */
 @media (max-width: 1024px) {

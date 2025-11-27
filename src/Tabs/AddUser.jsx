@@ -9,6 +9,7 @@ const AddUser = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [password, setPassword] = useState('');
   const [response, setResponse] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Generate random password (frontend)
   const generatePassword = (length = 10) => {
@@ -24,15 +25,14 @@ const AddUser = () => {
     e.preventDefault();
 
     // Frontend validation
-
-    if (!name && !email && !password ) {
+    if (!name && !email && !password) {
       setResponse({ type: "error", message: "Name, Email and Password are required!" });
       return;
-    }   
+    }
     if (!name) {
       setResponse({ type: "error", message: "Name is required!" });
       return;
-    } 
+    }
     if (!email) {
       setResponse({ type: "error", message: "Email is required!" });
       return;
@@ -43,6 +43,7 @@ const AddUser = () => {
     }
 
     try {
+      setIsSubmitting(true); // 👈 disable button
       const res = await fetch(`${CLIENT_ORIGIN}/api/users/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,13 +65,15 @@ const AddUser = () => {
       setPassword("");
     } catch (err) {
       setResponse({ type: "error", message: err.message });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   useEffect(() => {
     if (response) {
       const timer = setTimeout(() => setResponse(null), 3000);
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     }
   }, [response]);
 
@@ -79,41 +82,61 @@ const AddUser = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)}  />
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
         <div className="form-group">
           <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}  />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
 
         <div className="form-group">
           <label>Password</label>
           <div className='password-group'>
-            <input type="text" value={password} readOnly  />
-            <input type="button" className="generate-password-button" onClick={() => generatePassword(10)} value="Generate Password" />
+            <input type="text" value={password} readOnly />
+            <input
+              type="button"
+              className="generate-password-button"
+              onClick={() => generatePassword(10)}
+              value="Generate Password"
+            />
           </div>
         </div>
 
         <div className="form-group checkbox">
           <label>
-            <input type="checkbox" className="checkbox-input" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
+            <input
+              type="checkbox"
+              className="checkbox-input"
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+            />
             Is Admin
           </label>
         </div>
 
         <div className="form-group">
-          <button className="submit-button" type="submit">Add User</button>
+          <button
+            className="submit-button"
+            type="submit"
+            disabled={isSubmitting}
+            aria-disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Add User"}
+          </button>
         </div>
       </form>
 
       {response && (
-        <div className={`message ${response.type}`}>
+        <div
+          className={`message ${response.type}`}
+          aria-live="polite"
+        >
           {response.message}
         </div>
       )}
     </div>
-  );  
+  );
 };
 
 export default AddUser;

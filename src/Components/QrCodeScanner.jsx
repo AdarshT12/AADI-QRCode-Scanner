@@ -11,6 +11,7 @@ function QRScanner() {
   const [scanResult, setScanResult] = useState("");
   const [response, setResponse] = useState(null);
   const [helpLink, setHelpLink] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
   const handleResult = (result, err) => {
@@ -45,6 +46,7 @@ function QRScanner() {
 
   const captureData = async () => {
     if (scanResult) {
+      setIsProcessing(true);
       try {
         const res = await fetch(`${CLIENT_ORIGIN}/qr-scan`, {
           method: "POST",
@@ -56,13 +58,14 @@ function QRScanner() {
         const data = await res.json();
 
         if (data.success) {
-          // ✅ Navigate directly to member details
           navigate(`/member/${data.member.transactionId}`, { state: data.member });
         } else {
           setResponse({ type: "error", message: data.message || "No matching member found." });
         }
       } catch (err) {
         setResponse({ type: "error", message: "Unable to scan the QR code. Please try again later." });
+      } finally {
+        setIsProcessing(false);
       }
     } else {
       setResponse({ type: "error", message: "No QR code detected. Please try again later." });
@@ -70,9 +73,11 @@ function QRScanner() {
   };
 
   const resetCapture = () => {
-    setScanResult("");
-    setResponse(null);
-    setHelpLink("");
+    setTimeout(() => {
+      setScanResult("");
+      setResponse(null);
+      setHelpLink("");
+    }, 1000);
   };
 
   return (
@@ -88,19 +93,19 @@ function QRScanner() {
           </div>
 
           <div className="scan-button">
-            <button onClick={captureData}>
-              <span>Capture QR Code</span>
+            <button onClick={captureData} disabled={isProcessing} aria-disabled={isProcessing}>
+              <span>{isProcessing ? "Processing..." : "Capture QR Code"}</span>
               <MdOutlineQrCodeScanner className="qr-icon" />
             </button>
-            {/* <button onClick={resetCapture} className="reset-btn">
-              <GrPowerReset />
-            </button> */}
+            <button onClick={resetCapture} className="reset-btn">
+              <GrPowerReset className="reset-icon" />
+            </button>
           </div>
         </div>
       </div>
 
       {response && (
-        <div className={`message ${response.type}`}>
+        <div className={`message ${response.type}`} aria-live="polite">
           <span>{response.message}</span>
           {helpLink && (
             <a href={helpLink} target="_blank" rel="noopener noreferrer">

@@ -18,7 +18,7 @@ function MemberDetails() {
         <div className="id-card-header">
           <h2>Member Details</h2>
         </div>
-        <div className="id-card-body">
+        <div className="id-card-body" aria-live="polite">
           <CgProfile className="profile-icon" />
           <p><strong>Name:</strong> {member.Full_Name}</p>
           <p><strong>Event:</strong> {member.event}</p>

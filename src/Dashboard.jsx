@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [secureData, setSecureData] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const [activeTab, setActiveTab] = useState("UploadAndScan");
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     fetch(`${CLIENT_ORIGIN}/api/auth/me`, { credentials: 'include' })
@@ -30,12 +31,13 @@ export default function Dashboard() {
   }
 
   function handleLogout() {
+    if (isLoggingOut) return;
     fetch(`${CLIENT_ORIGIN}/api/auth/logout`, {
       method: 'POST',
       credentials: 'include'
     }).then(() => {
       window.location.href = "/";
-    });
+    }).finally(() => setIsLoggingOut(false));
   }
 
   return (
@@ -45,14 +47,14 @@ export default function Dashboard() {
           <div className="logo-icon"><img src={Logo} alt="Logo" /></div>
 
           <div className="profile-menu">
-            <button className="profile-button" onClick={() => setShowMenu(!showMenu)}>
+            <button className="profile-button" onClick={() => setShowMenu(!showMenu)} aria-expanded={showMenu}>
               <FaUserCircle className="profile-icon" />
               <h3 className='profile-name'>Hello {Boolean(me?.user?.isAdmin) ? "Admin" : me?.user?.name || ""}</h3>
               <IoMdArrowDropdown className="arrow-icon" />
             </button>
 
             {showMenu && (
-              <div className="dropdown" onClick={handleLogout}>
+              <div className="dropdown" onClick={handleLogout} aria-live="polite">
                 <IoIosLogOut className='Logout-icon' />
                 <span className='logout-text' >Logout</span>
               </div>
@@ -60,21 +62,22 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="dashboard-tabs">
-          <div className="tab-header">
-            <button className={activeTab === "UploadAndScan" ? "active" : ""} onClick={() => setActiveTab("UploadAndScan")}>
+          <div className="tab-header" role="navigation" aria-label="Dashboard Tabs">
+            <button className={activeTab === "UploadAndScan" ? "active" : ""} onClick={() => setActiveTab("UploadAndScan")} 
+             disabled={activeTab === "UploadAndScan"} aria-disabled={activeTab === "UploadAndScan"}>
               Upload & Scan
             </button>
             {Boolean(me?.user?.isAdmin) && (
               <button
                 className={activeTab === "AddUser" ? "active" : ""}
-                onClick={() => setActiveTab("AddUser")}
+                onClick={() => setActiveTab("AddUser")} disabled={activeTab === "AddUser"} aria-disabled={activeTab === "AddUser"}
               >
                 Add User
               </button>
             )}
           </div>
 
-          <div className="tab-content">
+          <div className="tab-content" role="region" aria-live="polite" aria-label="Tab Content Area">
             {activeTab === "UploadAndScan" && <UploadAndScanTab isAdmin={me?.user?.isAdmin === 1}/>}
             {me?.user?.isAdmin === 1  && activeTab === "AddUser" && <AddUserForm />}
           </div>

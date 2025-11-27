@@ -5,7 +5,7 @@ import QRScanner from "../Components/QrCodeScanner";
 
 function UploadAndScanTab({ isAdmin }) {
   return (
-    <div className="upload-scan-container">
+    <div className="upload-scan-container" aria-live="polite" role="region" aria-label="Upload and Scan Section">
       {isAdmin && <FileUploader />}
       <QRScanner />
     </div>

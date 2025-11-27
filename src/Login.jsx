@@ -94,7 +94,7 @@
                             <input type="submit" className="login-button" value="Login"  disabled={!!errors.email || !!errors.password || !email || !password}/>
                         </div>
                     </form>
-                    <div className="messageBox">
+                    <div className="messageBox" aria-live="polite" role="alert">
                         {msg && <label className="messageLabel">{msg}</label>}
                     </div>
                 </div>

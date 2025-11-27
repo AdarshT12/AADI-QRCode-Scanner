@@ -110,20 +110,21 @@ function FileUploader() {
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
     >
-      <div className="upload-box" onClick={() => fileInputRef.current.click()}>
+      <div className="upload-box" onClick={() => !isUploading && fileInputRef.current.click()}   aria-disabled={isUploading}>
         <div className="upload-icon-box">
           <IoCloudUploadOutline className="upload-icon" />
         </div>
         <p className="upload-text">
           <span className="clickable">Click to upload</span> or drag and drop
         </p>
-        <p className="upload-hint">Only .xls, .xlsx, or .csv files. Max size: 5MB</p>
+        <p className="upload-hint">Only .xls, .xlsx, or .csv files. Max size: 10MB</p>
         <input
           type="file"
           accept=".xls,.xlsx,.csv"
           ref={fileInputRef}
           style={{ display: "none" }}
           onChange={handleFileSelect}
+          disabled={isUploading} 
         />
       </div>
 
@@ -138,7 +139,7 @@ function FileUploader() {
 
       {/* Unified response block */}
       {response && (
-        <div className={`message ${response.type}`}>
+        <div className={`message ${response.type}`} aria-live="polite">
           {response.type === "success" && <MdCheckCircle className="success-icon" />}
           <span>{response.message}</span>
         </div>
