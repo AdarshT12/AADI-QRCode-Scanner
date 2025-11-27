@@ -6,6 +6,7 @@ import "./QRScanner.css";
 import { useNavigate } from "react-router-dom";
 import Correct from "../assets/Correct.jpeg";
 import Splash from "./Splash.jsx";
+const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
 
 function QRScanner() {
     const [scanResult, setScanResult] = useState("");
@@ -48,7 +49,7 @@ function QRScanner() {
     const captureData = async () => {
         if (scanResult) {
             try {
-                const res = await fetch("http://localhost:5000/qr-scan", {
+                const res = await fetch(`${CLIENT_ORIGIN}/qr-scan`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ qrCode: scanResult }),

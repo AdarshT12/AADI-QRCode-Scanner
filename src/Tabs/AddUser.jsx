@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './AddUser.css';
 
+const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
+
 const AddUser = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +43,7 @@ const AddUser = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/add", {
+      const res = await fetch(`${CLIENT_ORIGIN}/api/users/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, isAdmin })

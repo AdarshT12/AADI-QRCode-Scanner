@@ -124,6 +124,14 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .dashboard-container {
     height: auto; 
+    min-height: 100vh;       
+    overflow-y: scroll;
+  }
+
+  .dashboard-tabs {
+    flex: 1 1 auto;
+    overflow-y: scroll;        
+    overflow-x: hidden;
   }
 
   .dashboardHeader {
@@ -154,6 +162,17 @@
 
 /* Small mobile: ≤480px */
 @media (max-width: 480px) {
+  .dashboard-container {
+    min-height: 100vh;
+    overflow-y: auto;        
+  }
+
+  .dashboard-tabs {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
   .dashboardHeader {
     padding: 12px 16px;
     flex-direction: row;

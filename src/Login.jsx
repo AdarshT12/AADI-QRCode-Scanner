@@ -5,6 +5,8 @@
     import { IoIosLock } from "react-icons/io";
     import { useNavigate } from "react-router-dom";
 
+    const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
+
     function Login() {
         const navigate = useNavigate();
         const [email, setEmail] = useState("");
@@ -23,7 +25,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost:5000/api/auth/login', {
+                const res = await fetch(`${CLIENT_ORIGIN}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include', 

@@ -7,6 +7,8 @@ import UploadAndScanTab from './Tabs/Upload&Scan';
 import AddUserForm from './Tabs/AddUser.jsx';
 import Footer from './Components/Footer.jsx';
 
+const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
+
 export default function Dashboard() {
   const [me, setMe] = useState(null);
   const [secureData, setSecureData] = useState(null);
@@ -14,7 +16,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("UploadAndScan");
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/auth/me', { credentials: 'include' })
+    fetch(`${CLIENT_ORIGIN}/api/auth/me`, { credentials: 'include' })
       .then(r => r.json())
       .then(data => {
         console.log("Auth /me response:", data);
@@ -23,13 +25,13 @@ export default function Dashboard() {
   }, []);
 
   async function loadSecure() {
-    const res = await fetch('http://localhost:5000/api/secure/data', { credentials: 'include' });
+    const res = await fetch(`${CLIENT_ORIGIN}/api/secure/data`, { credentials: 'include' });
     const json = await res.json();
     setSecureData(json);
   }
 
   function handleLogout() {
-    fetch('http://localhost:5000/api/auth/logout', {
+    fetch(`${CLIENT_ORIGIN}/api/auth/logout`, {
       method: 'POST',
       credentials: 'include'
     }).then(() => {

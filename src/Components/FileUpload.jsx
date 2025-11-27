@@ -3,6 +3,8 @@ import "./FileUpload.css";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdCancel, MdCheckCircle } from "react-icons/md";
 
+const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
+
 function FileUploader() {
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -68,7 +70,7 @@ function FileUploader() {
       clearMessages();
     };
 
-    xhr.open("POST", "http://localhost:5000/upload");
+    xhr.open("POST", `${CLIENT_ORIGIN}/upload`, true);
     xhr.withCredentials = true;
 
     timeoutRef.current = setTimeout(() => {
