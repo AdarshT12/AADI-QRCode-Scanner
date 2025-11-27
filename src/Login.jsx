@@ -33,6 +33,7 @@
                 });
                 const data = await res.json();
                 if (!res.ok) return setMsg(data.error || 'Login failed');
+                
                   navigate("/dashboard");
             } catch {
                 setMsg('Network error');

@@ -8,7 +8,7 @@ const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
 function FileUploader() {
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [response, setResponse] = useState(null); // unified response
+  const [response, setResponse] = useState(null); 
   const xhrRef = useRef(null);
   const timeoutRef = useRef(null);
   const fileInputRef = useRef(null);

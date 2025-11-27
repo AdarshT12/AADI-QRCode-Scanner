@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddUser.css';
 
 const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
@@ -54,7 +54,7 @@ const AddUser = () => {
         throw new Error(errData.error || "Something went wrong! Please try again.");
       }
 
-      const data = await res.json();
+      await res.json();
       setResponse({ type: "success", message: "User created successfully!!" });
 
       // Reset form
@@ -66,6 +66,13 @@ const AddUser = () => {
       setResponse({ type: "error", message: err.message });
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      const timer = setTimeout(() => setResponse(null), 3000);
+      return () => clearTimeout(timer); 
+    }
+  }, [response]);
 
   return (
     <div className="card">
@@ -106,7 +113,7 @@ const AddUser = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default AddUser;

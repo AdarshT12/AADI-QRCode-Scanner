@@ -161,39 +161,39 @@ app.get('/api/secure/data', requireAuth, async (req, res) => {
 // ✅ Upload route
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
-    if(req.user.isAdmin !== 1){
-      return  res.status(403).send("Access denied. Only admin users can upload files.");
+    // ✅ Check session user
+    if (!req.session.user || req.session.user.isAdmin !== 1) {
+      return res.status(403).json({ error: "Access denied. Only admin users can upload files." });
     }
-    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // ✅ Check file
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
     const workbook = XLSX.readFile(req.file.path);
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
 
-    // ✅ Get headers directly from first row
     const headerRow = XLSX.utils.sheet_to_json(sheet, { header: 1 })[0];
-    const rawColumns = headerRow;
-
-    // ✅ Sanitize column names
-    const columns = rawColumns.map(col => col.replace(/\s+/g, "_").replace(/[^\w]/g, ""));
-
-    // ✅ Get all rows with headers
-    const rows = XLSX.utils.sheet_to_json(sheet);
-
-    if (!rows.length) {
+    if (!headerRow) {
       fs.unlinkSync(req.file.path);
-      return res.status(400).send("uploaded Excel file is empty. Please check the file and try again.");
+      return res.status(400).json({ error: "Uploaded Excel file is empty." });
     }
 
-    const conn = await pool.getConnection();
+    const columns = headerRow.map(col =>
+      col.replace(/\s+/g, "_").replace(/[^\w]/g, "")
+    );
+    const rows = XLSX.utils.sheet_to_json(sheet);
 
+    const conn = await pool.getConnection();
     const columnDefs = columns.map(col => `\`${col}\` VARCHAR(255)`).join(", ");
+
     await conn.query(
       `CREATE TABLE IF NOT EXISTS ${tableName} (MembersId INT AUTO_INCREMENT PRIMARY KEY, ${columnDefs})`
     );
 
-    const values = rows.map(row => rawColumns.map(col => row[col] || null));
-
+    const values = rows.map(row => headerRow.map(col => row[col] || null));
     await conn.query(
       `INSERT INTO ${tableName} (${columns.map(c => `\`${c}\``).join(", ")}) VALUES ?`,
       [values]
@@ -203,7 +203,8 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     fs.unlinkSync(req.file.path);
     res.status(200).json({ message: "File uploaded successfully" });
   } catch (err) {
-    res.status(500).send("Upload failed. Please try again later.");
+    console.error("Upload error:", err);
+    res.status(500).json({ error: "Upload failed. Please try again later." });
   }
 });
 

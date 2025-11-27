@@ -1,19 +1,43 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css'
-import Login from './Login.jsx';
+// App.jsx
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Login from "./Login.jsx";
 import Dashboard from "./Dashboard.jsx";
 import MemberDetails from "./Components/MemberDetails.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import "./Components/spinner.css";
+import "./App.css";
+
+function LoadingOverlay() {
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 400); // short delay
+    return () => clearTimeout(timer);
+  }, [location]);
+
+  if (!loading) return null;
+
+  return (
+    <div className="spinner-container">
+      <div className="spinner"></div>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/member/:transactionId" element={<MemberDetails />} />
-        </Routes>       
-    </>
-  )
+    <BrowserRouter>
+      <LoadingOverlay />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/member/:transactionId" element={<ProtectedRoute><MemberDetails /></ProtectedRoute>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

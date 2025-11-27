@@ -19,7 +19,6 @@ export default function Dashboard() {
     fetch(`${CLIENT_ORIGIN}/api/auth/me`, { credentials: 'include' })
       .then(r => r.json())
       .then(data => {
-        console.log("Auth /me response:", data);
         setMe(data);
       });
   }, []);
