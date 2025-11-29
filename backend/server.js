@@ -16,7 +16,7 @@ const tableName = "MembersData";
 
 const upload = multer({
   dest: "uploads/",
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  limits: { fileSize: 10 * 1024 * 1024 }, 
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (ext === ".xls" || ext === ".xlsx" || ext === ".csv") {
@@ -103,7 +103,7 @@ app.post('/api/auth/login', async (req, res) => {
     req.session.user = { email: user.email, isAdmin: user.isAdmin, name: user.name };
     res.json({ success: true, user: req.session.user });
   } catch (err) {
-    res.status(500).json({ error: 'An unexpected error occurred. Please try again later.' });
+    res.status(500).json({  error: 'An unexpected error occurred. Please Contact Admin.' });
   }
 });
 
@@ -115,6 +115,10 @@ app.post('/api/users/add', async (req, res) => {
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required.' });
+  }
+
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required.' });
   }
 
   try {
@@ -135,7 +139,7 @@ app.post('/api/users/add', async (req, res) => {
     });
   } catch (err) {
     console.error('Error inserting user:', err);
-    res.status(500).json({ error: 'Unable to create user. Please try again.' });
+    res.status(500).json({ error: 'Unable to create user. Please contact Admin.' });
   }
 });
 
@@ -221,11 +225,13 @@ app.post("/qr-scan", async (req, res) => {
     if (rows.length > 0) {
       res.json({ success: true, member: rows[0] });
     } else {
-      res.json({ success: false, message: "No matching member found" });
+      res.json({ success: false, message: "We couldn’t find a record matching this code. Please check and try again." });
     }
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: 'An unexpected error occurred. Please Contact Admin.' });
   }
 });
 
-app.listen(5000, () => console.log('Server on 5000'));
+const PORT = process.env.PORT || 5000;
+const HOST = '0.0.0.0';
+app.listen(PORT, HOST, () => console.log(`Server running on ${PORT}`));

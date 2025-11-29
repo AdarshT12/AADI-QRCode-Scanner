@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --primary-color: #0eb7eb;
+  --secondary-color: #555;
+  --neutral-color: #fafafa;
+  --neutral-color-light: #f0f0f0;
+  --primary-font-family: "Poppins", sans-serif;
+  --secondary-font-family: "Arial", sans-serif;
+  --card-bg: #fff;
+  --button-bg: #000;
+  --button-text: #fff;
+  --input-border: #ccc;
+  --error-label-color: #ff0000;
+  --text-color-primary: #000000;
+  --text-color-secondary: #ffffff;
+  --background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: var(--primary-font-family);
+  background-color: var(--neutral-color);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom: 40px;
+}
+
+footer {
+  font-family: var(--primary-font-family);
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  background-color: var(--text-color-primary);
+  color: var(--text-color-secondary);
+  padding: 10px 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.designer-company-name {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.designer-company-name a {
+  color: var(--text-color-secondary);
+  text-decoration: none;
+}
+
+.designer-company-name a:focus {
+  outline: 2px solid var(--primary-color);
+}
+
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px;
+  }
+
+  footer {
+    padding: 8px 16px;
+  }
+
+  .designer-company-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    background-color: var(--neutral-color-light);
+  }
+
+  footer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .designer-company-name {
+    font-size: 13px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  footer {
+    padding: 6px 12px;
+  }
+
+  .designer-company-name,
+  .designer-company-name a {
+    font-size: 12px;
+  }
+}
