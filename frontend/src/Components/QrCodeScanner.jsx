@@ -87,8 +87,16 @@ function QRScanner() {
           <div className="qr-reader">
             <QrReader
               constraints={{ facingMode: "environment" }}
-              onResult={handleResult}
-              style={{ width: "100%" }}
+              onResult={(result, error) => {
+                if (!!result) {
+                  console.log("QR Result:", result?.text);
+                  setScanResult(result?.text);
+                }
+                if (!!error) {
+                  console.error("QR Error:", error);
+                }
+              }}
+              containerStyle={{ width: "100%" }}
             />
           </div>
 
