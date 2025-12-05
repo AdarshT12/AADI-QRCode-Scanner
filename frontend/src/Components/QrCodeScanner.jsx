@@ -15,31 +15,17 @@ function QRScanner() {
   const navigate = useNavigate();
 
   const handleResult = (result, err) => {
-    if (!!result) {
+    if (result) {
       setScanResult(result?.text);
       setResponse(null);
     }
-    if (!!err) {
-      if (err.name && err.name.includes("NotFoundException")) return;
-
+    if (err && err.name) {
       if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
         setResponse({ type: "error", message: "Please grant permission to scan QR codes." });
-        const ua = navigator.userAgent;
-        if (ua.includes("Chrome")) {
-          setHelpLink("https://support.google.com/chrome/answer/2693767");
-        } else if (ua.includes("Firefox")) {
-          setHelpLink("https://support.mozilla.org/en-US/kb/how-manage-your-camera-and-microphone-permissions");
-        } else if (ua.includes("Edg")) {
-          setHelpLink("https://support.microsoft.com/en-us/microsoft-edge/camera-microphone-and-location-permissions-in-microsoft-edge");
-        } else if (ua.includes("Safari")) {
-          setHelpLink("https://support.apple.com/guide/safari/manage-camera-settings-ibrw1080/mac");
-        }
       } else if (err.name === "NotFoundError") {
-        setResponse({ type: "error", message: "No camera detected. Please connect a camera to continue." });
+        setResponse({ type: "error", message: "No camera detected." });
       } else if (err.name === "NotReadableError") {
-        setResponse({ type: "error", message: "The camera is currently in use by another application." });
-      } else {
-        setResponse({ type: "error", message: "Something went wrong. Please try again later." });
+        setResponse({ type: "error", message: "Camera is in use by another app." });
       }
     }
   };
@@ -54,30 +40,24 @@ function QRScanner() {
           body: JSON.stringify({ qrCode: scanResult }),
           credentials: "include"
         });
-
         const data = await res.json();
-
         if (data.success) {
           navigate(`/member/${data.member.transactionId}`, { state: data.member });
         } else {
           setResponse({ type: "error", message: data.message || "No matching member found." });
         }
-      } catch (err) {
-        setResponse({ type: "error", message: "Unable to scan the QR code. Please try again later." });
+      } catch {
+        setResponse({ type: "error", message: "Unable to scan the QR code." });
       } finally {
         setIsProcessing(false);
       }
-    } else {
-      setResponse({ type: "error", message: "No QR code detected. Please try again later." });
     }
   };
 
   const resetCapture = () => {
-    setTimeout(() => {
-      setScanResult("");
-      setResponse(null);
-      setHelpLink("");
-    }, 1000);
+    setScanResult("");
+    setResponse(null);
+    setHelpLink("");
   };
 
   return (
@@ -86,22 +66,17 @@ function QRScanner() {
         <div className="qrscanner-box">
           <div className="qr-reader">
             <QrReader
-              constraints={{ facingMode: "environment" }}
-              onResult={(result, error) => {
-                if (!!result) {
-                  console.log("QR Result:", result?.text);
-                  setScanResult(result?.text);
-                }
-                if (!!error) {
-                  console.error("QR Error:", error);
-                }
-              }}
-              containerStyle={{ width: "100%" }}
+              constraints={{ facingMode: { ideal: "environment" } }}
+              onResult={handleResult}
+              containerStyle={{ width: "100%", height: "350px" }}
+              videoContainerStyle={{ width: "100%", height: "100%" }}
+              videoStyle={{ width: "100%", height: "100%", objectFit: "cover", background: "transparent" }}
+              scanDelay={100}
             />
           </div>
 
           <div className="scan-button">
-            <button onClick={captureData} disabled={isProcessing} aria-disabled={isProcessing}>
+            <button onClick={captureData} disabled={isProcessing}>
               <span>{isProcessing ? "Processing..." : "Capture QR Code"}</span>
               <MdOutlineQrCodeScanner className="qr-icon" />
             </button>
@@ -115,11 +90,7 @@ function QRScanner() {
       {response && (
         <div className={`message ${response.type}`} aria-live="polite">
           <span>{response.message}</span>
-          {helpLink && (
-            <a href={helpLink} target="_blank" rel="noopener noreferrer">
-              Enable camera access
-            </a>
-          )}
+          {helpLink && <a href={helpLink} target="_blank" rel="noopener noreferrer">Enable camera access</a>}
         </div>
       )}
     </div>

@@ -66,27 +66,18 @@
 
 .qr-reader {
   border-radius: 10px;
-  background: black;
   width: 100%;
   height: 350px;
   position: relative;
   overflow: hidden;
 }
 
-.qr-reader::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: rgba(108, 99, 255, 0.7);
-  animation: scanline 2s linear infinite;
-}
 
-@keyframes scanline {
-  0% { top: 0; }
-  100% { top: 100%; }
+.qr-reader video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .qrscanner-container p {
