@@ -1,5 +1,5 @@
 // App.jsx
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Login from "./Login.jsx";
 import Dashboard from "./Dashboard.jsx";
