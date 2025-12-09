@@ -68,7 +68,7 @@ function QRScanner() {
             <QrReader
               constraints={{ facingMode: { ideal: "environment" } }}
               onResult={handleResult}
-              containerStyle={{ width: "100%", height: "350px" }}
+              containerStyle={{ width: "100%", height: "60vh" }}
               videoContainerStyle={{ width: "100%", height: "100%" }}
               videoStyle={{ width: "100%", height: "100%", objectFit: "cover", background: "transparent" }}
               scanDelay={100}

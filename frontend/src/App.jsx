@@ -1,5 +1,5 @@
 // App.jsx
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Login from "./Login.jsx";
 import Dashboard from "./Dashboard.jsx";
@@ -29,14 +29,14 @@ function LoadingOverlay() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <LoadingOverlay />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/member/:transactionId" element={<ProtectedRoute><MemberDetails /></ProtectedRoute>} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

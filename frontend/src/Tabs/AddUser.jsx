@@ -25,38 +25,38 @@ const AddUser = () => {
     e.preventDefault();
 
     // Frontend validation
-    if (!name && !email && !password) {
+    if (!name || !email || !password) {
       setResponse({ type: "error", message: "Name, Email and Password are required!" });
-      return;
-    }
-    if (!name) {
-      setResponse({ type: "error", message: "Name is required!" });
-      return;
-    }
-    if (!email) {
-      setResponse({ type: "error", message: "Email is required!" });
-      return;
-    }
-    if (!password) {
-      setResponse({ type: "error", message: "Password is required! Please generate one." });
       return;
     }
 
     try {
-      setIsSubmitting(true); // 👈 disable button
+      setIsSubmitting(true);
+
+      // 1️⃣ Save user in DB via Node backend
       const res = await fetch(`${CLIENT_ORIGIN}/api/users/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, isAdmin })
       });
-
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Something went wrong! Please try again.");
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Failed to save user in database.");
       }
 
-      await res.json();
-      setResponse({ type: "success", message: "User created successfully!!" });
+      // 2️⃣ Send email via PHP script
+      const res1 = await fetch(`${CLIENT_ORIGIN}/add_user.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data1 = await res1.json();
+      if (!res1.ok || data1.error) {
+        throw new Error(data1.error || "Failed to send email.");
+      }
+
+  
+      setResponse({ type: "success", message: "User created and email sent successfully!" });
 
       // Reset form
       setName("");
@@ -69,6 +69,7 @@ const AddUser = () => {
       setIsSubmitting(false);
     }
   };
+
 
   useEffect(() => {
     if (response) {
