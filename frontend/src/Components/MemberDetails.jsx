@@ -43,8 +43,8 @@ function MemberDetails() {
           <p><strong>Name:</strong> {member.Full_Name}</p>
           <p><strong>Email:</strong> {member.Email}</p>
           <p><strong>Phone:</strong> {member.Phone_Number}</p>
-          <p><strong>Event:</strong> {member.Event}</p>
-          <p><strong>Date:</strong> {getEventDetails(member.Event)}</p>
+          <p><strong>Event:</strong> {member.event}</p>
+          <p><strong>Date:</strong> {getEventDetails(member.event)}</p>
         </div>
       </div>
 
