@@ -32,10 +32,9 @@
                     body: JSON.stringify({ email, password })
                 });
                 const data = await res.json();
-                if (!res.ok) return setMsg(data.error || 'Login failed');
-                
+                if (!res.ok) return setMsg(data.error || 'Login failed');                
                   navigate("/dashboard");
-            } catch {
+            } catch (err) {
                 setMsg('Network error');
             }
         }
