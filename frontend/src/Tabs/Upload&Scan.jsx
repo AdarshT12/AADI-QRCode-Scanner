@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FileUploader from "../Components/FileUpload";
 import "./Upload&Scan.css";
 import QRScanner from "../Components/QrCodeScanner";

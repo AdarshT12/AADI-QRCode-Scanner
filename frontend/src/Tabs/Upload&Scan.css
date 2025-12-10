@@ -1,7 +1,3 @@
-body.admin-padding {
-  padding: 120px; 
-}
-
 .upload-scan-container {
   display: flex;
   flex-direction: row;
@@ -15,6 +11,10 @@ body.admin-padding {
 .upload-scan-container>* {
   flex: 1;
   min-width: 0;
+}
+
+.upload-scan-container.admin-padding {
+  padding-bottom: 120px; 
 }
 
 /* Tab buttons */
