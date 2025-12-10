@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './AddUser.css';
 
 const CLIENT_ORIGIN = import.meta.env.VITE_BACKEND_ORIGIN;
+const CLIENT_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
 
 const AddUser = () => {
   const [name, setName] = useState('');
@@ -45,7 +46,7 @@ const AddUser = () => {
       }
 
       // 2️⃣ Send email via PHP script
-      const res1 = await fetch(`${CLIENT_ORIGIN}/add_user.php`, {
+      const res1 = await fetch(`${CLIENT_FRONTEND_ORIGIN}/add_user.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password })
